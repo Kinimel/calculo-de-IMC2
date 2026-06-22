@@ -75,6 +75,14 @@ document.getElementById("contactForm").addEventListener("submit", function(e){
   document.getElementById("result").innerHTML = 
     "<p style='color:green'>Formulário enviado (simulação)</p>";
 });
+
+<script>
+document.getElementById("contactForm").addEventListener("submit", function(e){
+  e.preventDefault();
+  // apenas mostra uma mensagem de sucesso, sem chamar nada externo
+  document.getElementById("result").innerHTML = 
+    "<p style='color:green'>Formulário enviado (simulação)</p>";
+});
 </script>
 
 </body>
