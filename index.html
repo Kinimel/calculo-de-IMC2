@@ -48,34 +48,76 @@ h1, h2, h3, h4, h5, h6 {
   
   <hr>
   
-  <!-- Contact Section -->
   <div class="w3-container w3-padding-64" id="contato">
-    <h1>Contato</h1><br>
-    <p>Preencha os dados abaixo:</p>
-    <form id="contato IMC 2">
-      <p><input class="w3-input w3-padding-16" type="text" placeholder="Nome" required name="Nome"></p>
-      <p><input class="w3-input w3-padding-16" type="number" placeholder="Altura/Peso" required name="Dados"></p>
-      <p><input class="w3-input w3-padding-16" type="text" placeholder="Mensagem" required name="Message"></p>
-      <p><button class="w3-button w3-light-grey w3-section" type="submit">Enviar</button></p>
+  <h1>Contato & IMC</h1><br>
+  <p>Preencha os dados abaixo para enviar seu IMC direto para o WhatsApp:</p>
+  
+  <form id="form-imc-whatsapp" onsubmit="enviarParaWhatsApp(event)">
+    <p><input class="w3-input w3-padding-16" type="text" id="nome" placeholder="Nome" required></p>
+    
+    <p><input class="w3-input w3-padding-16" type="number" id="peso" placeholder="Peso (ex: 75.5)" min="1" max="500" step="0.1" required></p>
+    <p><input class="w3-input w3-padding-16" type="number" id="altura" placeholder="Altura (ex: 1.75)" min="0.5" max="3" step="0.01" required></p>
+    
+    <p><input class="w3-input w3-padding-16" type="text" id="mensagem" placeholder="Mensagem adicional" name="Message"></p>
+    <p><button class="w3-button w3-light-grey w3-section" type="submit">Enviar para o WhatsApp</button></p>
+  </form>
+</div>
+
+<script>
+function enviarParaWhatsApp(event) {
+  // 1. Impede a página de recarregar ao enviar o formulário
+  event.preventDefault(); 
+
+  // ========================================================
+  // ATENÇÃO: Substitua os números abaixo pelo SEU número de WhatsApp completo
+  // Formato: Código do País (55) + DDD + Número (ex: 5521999999999)
+  // ========================================================
+  const meuNumeroWhatsApp = "5521999999999"; 
+
+  // 2. Captura os valores digitados pelo usuário
+  const nome = document.getElementById('nome').value;
+  const peso = parseFloat(document.getElementById('peso').value);
+  const altura = parseFloat(document.getElementById('altura').value);
+  const mensagemAdicional = document.getElementById('mensagem').value || "Nenhuma";
+
+  // 3. Realiza o cálculo do IMC internamente
+  const imc = peso / (altura * altura);
+  let classificacao = "";
+
+  // 4. Define a classificação com base no resultado do IMC
+  if (imc < 18.5) { classificacao = "Abaixo do peso"; }
+  else if (imc < 25) { classificacao = "Peso normal"; }
+  else if (imc < 30) { classificacao = "Sobrepeso"; }
+  else if (imc < 35) { classificacao = "Obesidade grau I"; }
+  else if (imc < 40) { classificacao = "Obesidade grau II"; }
+  else { classificacao = "Obesidade grau III"; }
+
+  // 5. Monta o texto que será enviado na conversa do WhatsApp
+  const textoMensagem = `*Nova mensagem de IMC recebida!* 🏃‍♂️\n\n` +
+                        `• *Nome:* ${nome}\n` +
+                        `• *Peso:* ${peso} kg\n` +
+                        `• *Altura:* ${altura} m\n` +
+                        `• *IMC calculado:* ${imc.toFixed(2)}\n` +
+                        `• *Classificação:* ${classificacao}\n` +
+                        `• *Mensagem:* ${mensagemAdicional}\n\n` +
+                        ` _Enviado via formulário do site._`;
+
+  // 6. Transforma o texto em um formato que a URL do navegador entenda
+  const mensagemCodificada = encodeURIComponent(textoMensagem);
+
+  // 7. Cria o link final da API do WhatsApp e redireciona o usuário
+  const urlFinal = `https://wa.me/${meuNumeroWhatsApp}?text=${mensagemCodificada}`;
+  
+  // Abre o WhatsApp em uma nova aba (ou no aplicativo se for celular)
+  window.open(urlFinal, '_blank');
+}
+</script>
     </form>
 
     <div id="resultado"></div>
   </div>
 
 </div>
-
-<!-- Footer -->
-<footer class="w3-center w3-light-grey w3-padding-32">
-  <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank" class="w3-hover-text-green">w3.css</a></p>
-</footer>
-
-<script>
-document.getElementById("contactForm").addEventListener("submit", function(e){
-  e.preventDefault();
-  // apenas mostra uma mensagem de sucesso, sem chamar nada externo
-  document.getElementById("result").innerHTML = 
-    "<p style='color:green'>Formulário enviado (simulação)</p>";
-});
 </script>
 
 </body>
