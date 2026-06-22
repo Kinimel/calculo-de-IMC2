@@ -21,13 +21,12 @@ h1, h2, h3, h4, h5, h6 {
     <a href="#home" class="w3-bar-item w3-button">Criadores Marcelo e Gabriel Melo</a>
     <div class="w3-right w3-hide-small">  
       <a href="#contato" class="w3-bar-item w3-button">Contato</a>
-      </div>
+    </div>
   </div>
 </div>
 
 <!-- Header -->
 <header class="w3-display-container w3-content w3-wide" style="max-width:1600px;min-width:500px" id="home">
-<img class="w3-image" src="images/hamburger.jpg" alt="Hamburger Catering" width="1600" height="800">
   <div class="w3-display-bottomleft w3-padding-large w3-opacity">
     <h1 class="w3-xxlarge">Le Catering</h1>
   </div>
@@ -38,13 +37,12 @@ h1, h2, h3, h4, h5, h6 {
 
   <!-- About Section -->
   <div class="w3-row w3-padding-64" id="about">
-    <div class="w3-col m6 w3-padding-large w3-hide-small">
-     <img src="images/tablesetting2.jpg" class="w3-round w3-image w3-opacity-min" alt="Table Setting" width="600" height="750">
-    </div>
-
-    <div class="w3-col m6 w3-padding-large">
+    <div class="w3-col m12 w3-padding-large">
       <h1 class="w3-center">Peso e Altura</h1><br>
-      <p class="w3-large">Pagina para fazer os caculos de seu IMC conforme feito os passos a passos a resposta será enviada ao Whatsapp pessoal da pessoa. </p>
+      <p class="w3-large">
+        Página para fazer os cálculos de seu IMC conforme os passos. 
+        A resposta será enviada ao Whatsapp pessoal da pessoa.
+      </p>
     </div>
   </div>
   
@@ -52,14 +50,13 @@ h1, h2, h3, h4, h5, h6 {
   
   <!-- Contact Section -->
   <div class="w3-container w3-padding-64" id="contato">
-    <h1>Contact</h1><br>
-    <p>We offer full-service catering for any event...</p>
+    <h1>Contato</h1><br>
+    <p>Preencha os dados abaixo:</p>
     <form id="contactForm">
       <p><input class="w3-input w3-padding-16" type="text" placeholder="Nome" required name="Nome"></p>
-      <p><input class="w3-input w3-padding-16" type="number" placeholder="How many people" required name="People"></p>
-      <p><input class="w3-input w3-padding-16" type="datetime-local" required name="date"></p>
-      <p><input class="w3-input w3-padding-16" type="text" placeholder="Message / Special requirements" required name="Message"></p>
-      <p><button class="w3-button w3-light-grey w3-section" type="submit">Enviar resposta Whatsapp</button></p>
+      <p><input class="w3-input w3-padding-16" type="number" placeholder="Altura/Peso" required name="Dados"></p>
+      <p><input class="w3-input w3-padding-16" type="text" placeholder="Mensagem" required name="Message"></p>
+      <p><button class="w3-button w3-light-grey w3-section" type="submit">Enviar</button></p>
     </form>
 
     <div id="result"></div>
@@ -75,22 +72,9 @@ h1, h2, h3, h4, h5, h6 {
 <script>
 document.getElementById("contactForm").addEventListener("submit", function(e){
   e.preventDefault();
-  const formData = new FormData(this);
-fetch("action_page.php", {
-  method: "POS",
-  body: formData
-})
-
-  })
-  .then(response => response.json()) // espera JSON válido
-  .then(data => {
-    document.getElementById("result").innerHTML = 
-      "<p style='color:green'>"+data.message+"</p>";
-  })
-  .catch(err => {
-    document.getElementById("result").innerHTML = 
-      "<p style='color:red'>Erro: "+err+"</p>";
-  });
+  document.getElementById("result").innerHTML = 
+    "<p style='color:green'>Formulário enviado (simulação)</p>";
+});
 </script>
 
 </body>
